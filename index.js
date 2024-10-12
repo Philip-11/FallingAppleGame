@@ -14,7 +14,7 @@ setGravity(1200);
 const player = add([
     sprite("bean"),
     pos(width() / 2, height() - 100),
-    scale(3),
+    scale(2.5),
     anchor("center"),
     area(),
     body(),
@@ -32,6 +32,11 @@ const platform = add([
 
 ]);
 
+const scoreLabel = add([
+    text(score),
+    pos(width() / 2, 30),
+    scale(2),
+]);
 
 function spawnApples(){
     const apples = add([
@@ -51,8 +56,11 @@ function spawnApples(){
 
 spawnApples();
 
-player.onCollide("apple", () => {
+player.onCollide("apple", (apple) => {
     addKaboom(player.pos);
+    destroy(apple);
+    score++;
+    scoreLabel.text = score;
 })
 
 onKeyDown("left", () => {
